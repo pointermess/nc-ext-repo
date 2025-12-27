@@ -1,0 +1,39 @@
+{
+    "name": "ascii-table-builder",
+    "displayName": "ASCII Table Builder",
+    "version": "1.0.0",
+    "description": "Interactive ASCII table builder for creating and editing tables in text files",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.mjs",
+    "contributes": {
+        "views": {
+            "editors": [
+                {
+                    "id": "ascii-table-builder.view",
+                    "name": "ASCII Table Builder",
+                    "icon": "table",
+                    "component": "dist/components/TableBuilderView.mjs",
+                    "fileExtensions": [
+                        "txt",
+                        "md",
+                        "ascii"
+                    ]
+                }
+            ]
+        },
+        "commands": [
+            {
+                "id": "ascii-table-builder.open",
+                "title": "Open ASCII Table Builder",
+                "icon": "table",
+                "keybinding": "Ctrl+Shift+T"
+            },
+            {
+                "id": "ascii-table-builder.insert",
+                "title": "Insert ASCII Table",
+                "icon": "table"
+            }
+        ]
+    }
+}

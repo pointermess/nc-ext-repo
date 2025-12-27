@@ -1,0 +1,64 @@
+{
+    "name": "nexoft-themes",
+    "displayName": "Nexoft Themes",
+    "version": "1.0.0",
+    "description": "A collection of beautiful color themes for NexCODE, including Dracula, Monokai Pro, Nord, One Dark Pro, Solarized, and Catppuccin.",
+    "author": "Nexoft",
+    "license": "MIT",
+    "icon": "palette",
+    "main": "dist/index.mjs",
+    "contributes": {
+        "commands": [
+            {
+                "id": "nexoft-themes.dracula",
+                "title": "Apply Dracula Theme"
+            },
+            {
+                "id": "nexoft-themes.monokai",
+                "title": "Apply Monokai Pro Theme"
+            },
+            {
+                "id": "nexoft-themes.nord",
+                "title": "Apply Nord Theme"
+            },
+            {
+                "id": "nexoft-themes.oneDark",
+                "title": "Apply One Dark Pro Theme"
+            },
+            {
+                "id": "nexoft-themes.solarizedDark",
+                "title": "Apply Solarized Dark Theme"
+            },
+            {
+                "id": "nexoft-themes.solarizedLight",
+                "title": "Apply Solarized Light Theme"
+            },
+            {
+                "id": "nexoft-themes.catppuccinMocha",
+                "title": "Apply Catppuccin Mocha Theme"
+            },
+            {
+                "id": "nexoft-themes.catppuccinLatte",
+                "title": "Apply Catppuccin Latte Theme"
+            },
+            {
+                "id": "nexoft-themes.cycle",
+                "title": "Cycle Through Nexoft Themes",
+                "keybinding": "Ctrl+Alt+T"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "nexoft-themes.cycle",
+                "key": "Ctrl+Alt+T"
+            }
+        ]
+    },
+    "settings": {
+        "nexoft-themes.lastUsed": {
+            "type": "string",
+            "default": "",
+            "description": "The last theme that was activated"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "nexoft-themes",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite build --watch",
+        "build": "vite build",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "typescript": "^5.7.0",
+        "vite": "^6.0.0"
+    }
+}

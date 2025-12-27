@@ -1,0 +1,32 @@
+{
+    "name": "markdown-preview",
+    "displayName": "Markdown Preview",
+    "version": "1.0.0",
+    "description": "Real-time Markdown preview extension for NexCODE",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.mjs",
+    "contributes": {
+        "views": {
+            "editors": [
+                {
+                    "id": "markdown-preview.view",
+                    "name": "Markdown Preview",
+                    "icon": "markdown",
+                    "component": "dist/components/MarkdownView.mjs",
+                    "fileExtensions": [
+                        "md"
+                    ]
+                }
+            ]
+        },
+        "commands": [
+            {
+                "id": "markdown-preview.open",
+                "title": "Open Preview",
+                "icon": "markdown",
+                "keybinding": "Ctrl+Shift+V"
+            }
+        ]
+    }
+}

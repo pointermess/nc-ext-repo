@@ -1,0 +1,54 @@
+{
+    "name": "todo-list",
+    "displayName": "Todo List",
+    "version": "1.0.0",
+    "description": "A simple todo list extension for NexCODE that demonstrates the extension system.",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.mjs",
+    "contributes": {
+        "sidebar": [
+            {
+                "id": "todo-list.panel",
+                "name": "Todo List",
+                "icon": "list-check",
+                "component": "dist/components/TodoPanel.mjs",
+                "position": "top",
+                "side": "left"
+            }
+        ],
+        "commands": [
+            {
+                "id": "todo-list.addTodo",
+                "title": "Add Todo Item",
+                "keybinding": "Ctrl+Shift+T"
+            },
+            {
+                "id": "todo-list.clearCompleted",
+                "title": "Clear Completed Todos"
+            }
+        ],
+        "statusBar": [
+            {
+                "id": "todo-list.count",
+                "text": "✓ Todos",
+                "tooltip": "Click to open Todo List",
+                "command": "todo-list.showPanel",
+                "alignment": "right",
+                "priority": 50
+            }
+        ]
+    },
+    "settings": {
+        "todo-list.showCompleted": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show completed todos in the list"
+        },
+        "todo-list.persistTodos": {
+            "type": "boolean",
+            "default": true,
+            "description": "Persist todos across sessions"
+        }
+    }
+}

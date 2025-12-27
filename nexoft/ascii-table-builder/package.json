@@ -1,0 +1,23 @@
+{
+    "name": "ascii-table-builder",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "ASCII table builder extension for NexCODE",
+    "scripts": {
+        "dev": "npm run build -- --watch",
+        "build": "npm run build-index && npm run build-view",
+        "build-index": "vite build --config vite.config.index.ts",
+        "build-view": "vite build --config vite.config.view.ts",
+        "typecheck": "vue-tsc --noEmit"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "@vitejs/plugin-vue": "^6.0.0",
+        "typescript": "^5.7.0",
+        "vite": "^6.0.0",
+        "vue": "^3.5.0",
+        "vue-tsc": "^3.1.0"
+    }
+}
