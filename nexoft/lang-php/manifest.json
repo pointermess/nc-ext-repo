@@ -1,0 +1,23 @@
+{
+    "name": "lang-php",
+    "displayName": "PHP Language Support",
+    "version": "1.0.0",
+    "description": "PHP language support for NexCODE using Intelephense LSP",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "contributes": {
+        "commands": [
+            {
+                "id": "php.restartServer",
+                "title": "Restart Intelephense",
+                "icon": "sync"
+            },
+            {
+                "id": "php.indexWorkspace",
+                "title": "Intelephense: Index Workspace",
+                "icon": "database"
+            }
+        ]
+    }
+}

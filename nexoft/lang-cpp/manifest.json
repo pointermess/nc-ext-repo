@@ -1,0 +1,181 @@
+{
+    "name": "lang-cpp",
+    "displayName": "C/C++ Language Support",
+    "version": "1.0.0",
+    "description": "C/C++ language support for NexCODE including Clangd LSP integration, compiler profiles, and launch configurations",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "icon": "icon.png",
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters",
+        "Debuggers"
+    ],
+    "activationEvents": [
+        "onLanguage:cpp",
+        "onLanguage:c",
+        "workspaceContains:**/*.cpp",
+        "workspaceContains:**/*.c",
+        "workspaceContains:**/*.h",
+        "workspaceContains:**/*.hpp"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "id": "cpp.restartServer",
+                "title": "Restart Clangd",
+                "icon": "sync"
+            },
+            {
+                "id": "cpp.selectCompiler",
+                "title": "Select C++ Compiler",
+                "icon": "cogs"
+            },
+            {
+                "id": "cpp.createLaunchConfig",
+                "title": "Create Launch Configuration",
+                "icon": "play"
+            }
+        ],
+        "languages": [
+            {
+                "id": "cpp",
+                "name": "C++",
+                "extensions": [
+                    ".cpp",
+                    ".cc",
+                    ".cxx",
+                    ".c++",
+                    ".hpp",
+                    ".hxx",
+                    ".h++"
+                ],
+                "aliases": [
+                    "C++",
+                    "cpp",
+                    "cplusplus"
+                ]
+            },
+            {
+                "id": "c",
+                "name": "C",
+                "extensions": [
+                    ".c",
+                    ".h"
+                ],
+                "aliases": [
+                    "C",
+                    "c"
+                ]
+            }
+        ],
+        "compilerProfiles": [
+            {
+                "id": "cpp.gcc",
+                "name": "GCC (g++)",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "command": "g++",
+                "args": [
+                    "-g",
+                    "-Wall",
+                    "-Wextra",
+                    "-std=c++17"
+                ],
+                "outputFlag": "-o"
+            },
+            {
+                "id": "cpp.clang",
+                "name": "Clang (clang++)",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "command": "clang++",
+                "args": [
+                    "-g",
+                    "-Wall",
+                    "-Wextra",
+                    "-std=c++17"
+                ],
+                "outputFlag": "-o"
+            },
+            {
+                "id": "cpp.msvc",
+                "name": "MSVC (cl)",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "command": "cl",
+                "args": [
+                    "/EHsc",
+                    "/W4",
+                    "/std:c++17"
+                ],
+                "outputFlag": "/Fe:"
+            }
+        ],
+        "launchProfiles": [
+            {
+                "id": "cpp.launch.debug",
+                "name": "Debug C++ Application",
+                "type": "cppdbg",
+                "request": "launch",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "configurations": {
+                    "program": "${workspaceFolder}/${fileBasenameNoExtension}${executableExtension}",
+                    "args": [],
+                    "stopAtEntry": false,
+                    "cwd": "${workspaceFolder}",
+                    "environment": [],
+                    "externalConsole": false
+                }
+            },
+            {
+                "id": "cpp.launch.run",
+                "name": "Run C++ Application",
+                "type": "run",
+                "request": "launch",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "configurations": {
+                    "program": "${workspaceFolder}/${fileBasenameNoExtension}${executableExtension}",
+                    "args": [],
+                    "cwd": "${workspaceFolder}"
+                }
+            }
+        ],
+        "debuggers": [
+            {
+                "id": "cppdbg-gdb",
+                "name": "GDB Debugger",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "command": "gdb",
+                "type": "cppdbg"
+            },
+            {
+                "id": "cppdbg-lldb",
+                "name": "LLDB Debugger",
+                "languages": [
+                    "cpp",
+                    "c"
+                ],
+                "command": "lldb",
+                "type": "cppdbg"
+            }
+        ]
+    }
+}
