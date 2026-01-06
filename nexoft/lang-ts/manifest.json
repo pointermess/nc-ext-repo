@@ -1,0 +1,141 @@
+{
+    "name": "lang-ts",
+    "displayName": "TypeScript Language Support",
+    "version": "1.0.0",
+    "description": "TypeScript and JavaScript language support for NexCODE with typescript-language-server integration",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters"
+    ],
+    "activationEvents": [
+        "onLanguage:typescript",
+        "onLanguage:javascript",
+        "onLanguage:typescriptreact",
+        "onLanguage:javascriptreact",
+        "workspaceContains:**/*.ts",
+        "workspaceContains:**/*.tsx",
+        "workspaceContains:**/*.js",
+        "workspaceContains:**/*.jsx",
+        "workspaceContains:**/*.mjs",
+        "workspaceContains:**/*.cjs",
+        "workspaceContains:**/tsconfig.json",
+        "workspaceContains:**/jsconfig.json"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "id": "typescript.restartServer",
+                "title": "Restart TypeScript Language Server",
+                "icon": "sync"
+            },
+            {
+                "id": "typescript.organizeImports",
+                "title": "Organize Imports",
+                "icon": "sort"
+            },
+            {
+                "id": "typescript.goToProjectConfig",
+                "title": "Go to Project Configuration",
+                "icon": "settings"
+            }
+        ],
+        "languages": [
+            {
+                "id": "typescript",
+                "name": "TypeScript",
+                "extensions": [
+                    ".ts",
+                    ".mts",
+                    ".cts"
+                ],
+                "aliases": [
+                    "TypeScript",
+                    "ts",
+                    "typescript"
+                ]
+            },
+            {
+                "id": "typescriptreact",
+                "name": "TypeScript React",
+                "extensions": [
+                    ".tsx"
+                ],
+                "aliases": [
+                    "TypeScript React",
+                    "tsx",
+                    "typescriptreact"
+                ]
+            },
+            {
+                "id": "javascript",
+                "name": "JavaScript",
+                "extensions": [
+                    ".js",
+                    ".mjs",
+                    ".cjs"
+                ],
+                "aliases": [
+                    "JavaScript",
+                    "js",
+                    "javascript"
+                ]
+            },
+            {
+                "id": "javascriptreact",
+                "name": "JavaScript React",
+                "extensions": [
+                    ".jsx"
+                ],
+                "aliases": [
+                    "JavaScript React",
+                    "jsx",
+                    "javascriptreact"
+                ]
+            }
+        ],
+        "configuration": {
+            "title": "TypeScript",
+            "properties": {
+                "typescript.format.enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable/disable formatting"
+                },
+                "typescript.format.insertSpaceAfterCommaDelimiter": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Insert space after comma delimiter"
+                },
+                "typescript.format.insertSpaceAfterSemicolonInForStatements": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Insert space after semicolon in for statements"
+                },
+                "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Insert space before and after binary operators"
+                },
+                "typescript.suggest.autoImports": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable auto imports suggestions"
+                },
+                "typescript.preferences.quoteStyle": {
+                    "type": "string",
+                    "enum": [
+                        "auto",
+                        "single",
+                        "double"
+                    ],
+                    "default": "auto",
+                    "description": "Preferred quote style for strings"
+                }
+            }
+        }
+    }
+}
