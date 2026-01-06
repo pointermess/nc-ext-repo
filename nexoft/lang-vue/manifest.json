@@ -1,0 +1,101 @@
+{
+    "name": "lang-vue",
+    "displayName": "Vue Language Support",
+    "version": "1.0.0",
+    "description": "Vue 3 language support for NexCODE with Volar language server integration",
+    "author": "NexCODE Team",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters"
+    ],
+    "activationEvents": [
+        "onLanguage:vue",
+        "workspaceContains:**/*.vue",
+        "workspaceContains:**/vite.config.js",
+        "workspaceContains:**/vite.config.ts",
+        "workspaceContains:**/vue.config.js"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "id": "vue.restartServer",
+                "title": "Restart Vue Language Server",
+                "icon": "sync"
+            },
+            {
+                "id": "vue.openDocs",
+                "title": "Open Vue Documentation",
+                "icon": "book"
+            },
+            {
+                "id": "vue.showOutputChannel",
+                "title": "Show Vue Language Server Output",
+                "icon": "output"
+            }
+        ],
+        "languages": [
+            {
+                "id": "vue",
+                "name": "Vue",
+                "extensions": [
+                    ".vue"
+                ],
+                "aliases": [
+                    "Vue",
+                    "vue",
+                    "vuejs"
+                ]
+            }
+        ],
+        "configuration": {
+            "title": "Vue",
+            "properties": {
+                "vue.server.hybridMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable Hybrid Mode (requires TypeScript plugin)"
+                },
+                "vue.inlayHints.missingProps": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show inlay hints for missing required props"
+                },
+                "vue.inlayHints.inlineHandlerLeading": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show inlay hints for inline event handlers"
+                },
+                "vue.complete.casing.tags": {
+                    "type": "string",
+                    "enum": [
+                        "autoKebab",
+                        "autoPascal",
+                        "kebab",
+                        "pascal"
+                    ],
+                    "default": "autoKebab",
+                    "description": "Preferred casing for component tags"
+                },
+                "vue.complete.casing.props": {
+                    "type": "string",
+                    "enum": [
+                        "autoKebab",
+                        "autoCamel",
+                        "kebab",
+                        "camel"
+                    ],
+                    "default": "autoKebab",
+                    "description": "Preferred casing for component props"
+                },
+                "vue.autoInsert.dotValue": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Auto-insert .value when completing ref variables"
+                }
+            }
+        }
+    }
+}
