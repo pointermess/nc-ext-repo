@@ -1,16 +1,42 @@
-function v() {
-  const n = navigator.userAgent.toLowerCase();
-  return n.includes("windows") ? "windows" : n.includes("mac") ? "macos" : "linux";
+function S(r) {
+  return {
+    command: "node",
+    args: [`${r}/node_modules/typescript-language-server/lib/cli.mjs`, "--stdio"]
+  };
 }
-async function j(n) {
+async function T(r) {
   console.log("[TypeScript Extension] Activating...");
-  const o = v() === "windows";
-  let i, t;
-  o ? `${n.extensionPath}` : `${n.extensionPath}`, i = o ? "typescript-language-server.cmd" : "typescript-language-server", t = ["--stdio"], console.log("[TypeScript Extension] Using system-installed TypeScript Language Server");
-  const c = {
+  const { command: n, args: t } = S(r.extensionPath);
+  console.log("[TypeScript Extension] Using bundled TypeScript Language Server from node_modules"), console.log(`[TypeScript Extension] Command: ${n} ${t.join(" ")}`);
+  const o = {
     lsp: {
       enabled: !0,
-      command: i,
+      command: n,
+      args: t,
+      registeredBy: "lang-ts"
+    },
+    formatter: {
+      enabled: !0,
+      command: "prettier",
+      formatOnSave: !0,
+      formatOnPaste: !1,
+      registeredBy: "lang-ts"
+    },
+    linter: {
+      enabled: !0,
+      command: "eslint",
+      lintOnSave: !0,
+      lintOnType: !1,
+      registeredBy: "lang-ts"
+    }
+  }, i = {
+    lsp: { ...o.lsp },
+    formatter: { ...o.formatter },
+    linter: { ...o.linter }
+  }, g = {
+    lsp: {
+      enabled: !0,
+      command: n,
       args: t,
       registeredBy: "lang-ts"
     },
@@ -29,45 +55,20 @@ async function j(n) {
       registeredBy: "lang-ts"
     }
   }, m = {
-    lsp: { ...c.lsp },
-    formatter: { ...c.formatter },
-    linter: { ...c.linter }
-  }, g = {
-    lsp: {
-      enabled: !0,
-      command: i,
-      args: t,
-      registeredBy: "lang-ts"
-    },
-    formatter: {
-      enabled: !0,
-      command: "prettier",
-      formatOnSave: !0,
-      formatOnPaste: !1,
-      registeredBy: "lang-ts"
-    },
-    linter: {
-      enabled: !0,
-      command: "eslint",
-      lintOnSave: !0,
-      lintOnType: !1,
-      registeredBy: "lang-ts"
-    }
-  }, y = {
     lsp: { ...g.lsp },
     formatter: { ...g.formatter },
     linter: { ...g.linter }
   };
   try {
-    await nexcode.settings.update("language-settings:typescript", JSON.stringify(c)), console.log("[TypeScript Extension] Updated TypeScript language settings"), await nexcode.settings.update("language-settings:typescriptreact", JSON.stringify(m)), console.log("[TypeScript Extension] Updated TypeScript React language settings"), await nexcode.settings.update("language-settings:javascript", JSON.stringify(g)), console.log("[TypeScript Extension] Updated JavaScript language settings"), await nexcode.settings.update("language-settings:javascriptreact", JSON.stringify(y)), console.log("[TypeScript Extension] Updated JavaScript React language settings");
+    await nexcode.settings.update("language-settings:typescript", JSON.stringify(o)), console.log("[TypeScript Extension] Updated TypeScript language settings"), await nexcode.settings.update("language-settings:typescriptreact", JSON.stringify(i)), console.log("[TypeScript Extension] Updated TypeScript React language settings"), await nexcode.settings.update("language-settings:javascript", JSON.stringify(g)), console.log("[TypeScript Extension] Updated JavaScript language settings"), await nexcode.settings.update("language-settings:javascriptreact", JSON.stringify(m)), console.log("[TypeScript Extension] Updated JavaScript React language settings");
     const e = {
       extensionId: "lang-ts",
       extensionName: "TypeScript Language Support",
       provides: {
         languages: ["typescript", "typescriptreact", "javascript", "javascriptreact"],
         lsp: {
-          name: "TypeScript Language Server",
-          command: i
+          name: "TypeScript Language Server (Bundled)",
+          command: `${n} ${t.join(" ")}`
         },
         formatter: {
           name: "Prettier",
@@ -106,23 +107,23 @@ async function j(n) {
         message: "Organizing imports is not yet fully implemented via the LSP API.",
         timeout: 3e3
       });
-    } catch (r) {
-      console.error("[TypeScript Extension] Failed to organize imports:", r);
+    } catch (a) {
+      console.error("[TypeScript Extension] Failed to organize imports:", a);
     }
   }), nexcode.commands.register("typescript.goToProjectConfig", async () => {
-    var e, s, r, l, d;
+    var e, s, a, l, p;
     try {
-      const a = ((s = (e = nexcode.workspace) == null ? void 0 : e.getProjects) == null ? void 0 : s.call(e)) || [];
-      if (a.length === 0) {
+      const c = ((s = (e = nexcode.workspace) == null ? void 0 : e.getProjects) == null ? void 0 : s.call(e)) || [];
+      if (c.length === 0) {
         nexcode.window.showMessage("No workspace open", "warning");
         return;
       }
-      const u = ((r = a[0]) == null ? void 0 : r.path) || a[0], x = ["tsconfig.json", "jsconfig.json"];
-      for (const S of x) {
-        const f = `${u}/${S}`;
+      const d = ((a = c[0]) == null ? void 0 : a.path) || c[0], f = ["tsconfig.json", "jsconfig.json"];
+      for (const y of f) {
+        const u = `${d}/${y}`;
         try {
-          if (await ((d = (l = nexcode.fs) == null ? void 0 : l.exists) == null ? void 0 : d.call(l, f))) {
-            await nexcode.editor.openFile(f);
+          if (await ((p = (l = nexcode.fs) == null ? void 0 : l.exists) == null ? void 0 : p.call(l, u))) {
+            await nexcode.editor.openFile(u);
             return;
           }
         } catch {
@@ -134,19 +135,19 @@ async function j(n) {
         actions: [
           {
             label: "Create tsconfig.json",
-            callback: () => w(u)
+            callback: () => x(d)
           }
         ],
         timeout: 5e3
       });
-    } catch (a) {
-      console.error("[TypeScript Extension] Failed to go to project config:", a);
+    } catch (c) {
+      console.error("[TypeScript Extension] Failed to go to project config:", c);
     }
   }), console.log("[TypeScript Extension] Activation complete");
 }
-async function w(n) {
-  var o, i;
-  const p = {
+async function x(r) {
+  var t, o;
+  const n = {
     compilerOptions: {
       target: "ES2020",
       module: "ESNext",
@@ -163,24 +164,24 @@ async function w(n) {
     exclude: ["node_modules", "dist"]
   };
   try {
-    const t = `${n}/tsconfig.json`;
-    await ((i = (o = nexcode.fs) == null ? void 0 : o.writeFile) == null ? void 0 : i.call(o, t, JSON.stringify(p, null, 2))), await nexcode.editor.openFile(t), nexcode.notifications.success({
+    const i = `${r}/tsconfig.json`;
+    await ((o = (t = nexcode.fs) == null ? void 0 : t.writeFile) == null ? void 0 : o.call(t, i, JSON.stringify(n, null, 2))), await nexcode.editor.openFile(i), nexcode.notifications.success({
       title: "Configuration Created",
       message: "Created tsconfig.json with default settings.",
       timeout: 3e3
     });
-  } catch (t) {
-    console.error("[TypeScript Extension] Failed to create tsconfig.json:", t), nexcode.notifications.error({
+  } catch (i) {
+    console.error("[TypeScript Extension] Failed to create tsconfig.json:", i), nexcode.notifications.error({
       title: "Error",
       message: "Failed to create tsconfig.json",
       timeout: 3e3
     });
   }
 }
-function h() {
+function j() {
   console.log("[TypeScript Extension] Deactivated");
 }
 export {
-  j as activate,
-  h as deactivate
+  T as activate,
+  j as deactivate
 };

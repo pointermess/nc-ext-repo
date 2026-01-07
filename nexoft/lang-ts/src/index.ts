@@ -47,39 +47,19 @@ function getOS(): 'windows' | 'macos' | 'linux' {
 }
 
 /**
- * Get the TypeScript Language Server command based on OS
+ * Get the TypeScript Language Server command using bundled npm package
+ * 
+ * The extension includes typescript-language-server as a dependency,
+ * so we can reference it directly from node_modules.
  */
 function getTsServerCommand(extensionPath: string): { command: string; args: string[] } {
-    const os = getOS();
+    // Path to the CLI entry point in node_modules (absolute path)
+    const tsServerPath = `${extensionPath}/node_modules/typescript-language-server/lib/cli.mjs`;
 
-    // Check if we have a bundled typescript-language-server
-    // For now, we'll use the system-installed version
-    // In the future, we could bundle it in libs/
-
-    if (os === 'windows') {
-        return {
-            command: `${extensionPath}/libs/typescript-language-server.cmd`,
-            args: ['--stdio']
-        };
-    } else {
-        return {
-            command: `${extensionPath}/libs/typescript-language-server`,
-            args: ['--stdio']
-        };
-    }
-}
-
-/**
- * Check if typescript-language-server is available in system PATH
- */
-async function checkSystemTsServer(): Promise<boolean> {
-    try {
-        // Try to check if the command exists
-        // This is a simplified check - in production you'd want to actually test the command
-        return true; // Assume it's available for now
-    } catch {
-        return false;
-    }
+    return {
+        command: 'node',
+        args: [tsServerPath, '--stdio']
+    };
 }
 
 /**
@@ -88,38 +68,17 @@ async function checkSystemTsServer(): Promise<boolean> {
 export async function activate(context: any) {
     console.log('[TypeScript Extension] Activating...');
 
-    const os = getOS();
-    const isWindows = os === 'windows';
+    // 1. Get TypeScript Language Server command from bundled node_modules
+    const { command: tsServerCommand, args: tsServerArgs } = getTsServerCommand(context.extensionPath);
 
-    // 1. Resolve paths to TypeScript Language Server
-    // First, try to use bundled version, fallback to system-installed
-    let tsServerPath: string;
-    let tsServerArgs: string[];
-
-    const bundledServerPath = isWindows
-        ? `${context.extensionPath}/libs/typescript-language-server.cmd`
-        : `${context.extensionPath}/libs/typescript-language-server`;
-
-    // Check if bundled version exists (for future use when bundling)
-    // For now, use system-installed version
-    const useSystemServer = true; // TODO: Check if bundled exists
-
-    if (useSystemServer) {
-        // Use system-installed typescript-language-server
-        tsServerPath = isWindows ? 'typescript-language-server.cmd' : 'typescript-language-server';
-        tsServerArgs = ['--stdio'];
-        console.log(`[TypeScript Extension] Using system-installed TypeScript Language Server`);
-    } else {
-        tsServerPath = bundledServerPath;
-        tsServerArgs = ['--stdio'];
-        console.log(`[TypeScript Extension] Using bundled TypeScript Language Server at: ${tsServerPath}`);
-    }
+    console.log(`[TypeScript Extension] Using bundled TypeScript Language Server from node_modules`);
+    console.log(`[TypeScript Extension] Command: ${tsServerCommand} ${tsServerArgs.join(' ')}`);
 
     // 2. Configure LSP and tooling settings for TypeScript
     const typescriptConfig: LanguageSettings = {
         lsp: {
             enabled: true,
-            command: tsServerPath,
+            command: tsServerCommand,
             args: tsServerArgs,
             registeredBy: 'lang-ts'
         },
@@ -150,7 +109,7 @@ export async function activate(context: any) {
     const javascriptConfig: LanguageSettings = {
         lsp: {
             enabled: true,
-            command: tsServerPath,
+            command: tsServerCommand,
             args: tsServerArgs,
             registeredBy: 'lang-ts'
         },
@@ -202,8 +161,8 @@ export async function activate(context: any) {
             provides: {
                 languages: ['typescript', 'typescriptreact', 'javascript', 'javascriptreact'],
                 lsp: {
-                    name: 'TypeScript Language Server',
-                    command: tsServerPath
+                    name: 'TypeScript Language Server (Bundled)',
+                    command: `${tsServerCommand} ${tsServerArgs.join(' ')}`
                 },
                 formatter: {
                     name: 'Prettier',
