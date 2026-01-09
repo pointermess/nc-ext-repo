@@ -54,7 +54,7 @@ function getOS(): 'windows' | 'macos' | 'linux' {
  */
 function getTsServerCommand(extensionPath: string): { command: string; args: string[] } {
     // Path to the CLI entry point in node_modules (absolute path)
-    const tsServerPath = `${extensionPath}/node_modules/typescript-language-server/lib/cli.mjs`;
+    const tsServerPath = `${extensionPath}/node_modules/typescript-language-server/lib/cli.mjs`.replace(/\\/g, '/');
 
     return {
         command: 'node',
