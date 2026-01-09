@@ -15,7 +15,7 @@ export async function activate(context: any) {
     const binName = isWindows ? 'rust-analyzer.exe' : 'rust-analyzer';
 
     // context.extensionPath is the absolute path to this extension's directory
-    const rustAnalyzerPath = `${context.extensionPath}/libs/${binName}`;
+    const rustAnalyzerPath = `${context.extensionPath}/libs/${binName}`.replace(/\\/g, '/');
 
     console.log(`[Rust Extension] Found bundled LSP at: ${rustAnalyzerPath}`);
 
@@ -25,19 +25,22 @@ export async function activate(context: any) {
         lsp: {
             enabled: true,
             command: rustAnalyzerPath,
-            args: [] // Add any default args if necessary
+            args: [], // Add any default args if necessary
+            registeredBy: 'lang-rs'
         },
         formatter: {
             enabled: true,
             command: 'rustfmt', // Assumes rustfmt is in PATH for now, or could use bundled one
             formatOnSave: true,
-            formatOnPaste: false
+            formatOnPaste: false,
+            registeredBy: 'lang-rs'
         },
         linter: {
             enabled: true,
             command: 'clippy',
             lintOnSave: true,
-            lintOnType: false
+            lintOnType: false,
+            registeredBy: 'lang-rs'
         }
     };
 

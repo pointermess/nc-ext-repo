@@ -1,17 +1,35 @@
 {
     "name": "lang-rs",
     "displayName": "Rust Language Support",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Rust language support for NexCODE including Rust Analyzer integration",
     "author": "NexCODE Team",
     "license": "MIT",
     "main": "dist/index.js",
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters"
+    ],
+    "extensionDependencies": [
+        "debugger-lldb"
+    ],
     "contributes": {
         "commands": [
             {
                 "id": "rust.restartServer",
                 "title": "Restart Rust Analyzer",
                 "icon": "sync"
+            }
+        ],
+        "debuggers": [
+            {
+                "type": "lldb",
+                "label": "LLDB (via debugger-lldb)",
+                "languages": [
+                    "rust"
+                ],
+                "useExtension": "debugger-lldb"
             }
         ]
     }
